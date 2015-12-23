@@ -65,13 +65,13 @@ echo "server time.ncsu.edu" >> /etc/ntp.conf
 # "$DEFAULTS" write "$TVOL/Library/Preferences/SystemConfiguration/com.apple.AutoWake"
 
 # Configure Login Window to username and password text fields
-"$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.loginwindow" SHOWFULLNAME 1
+"$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.loginwindow" SHOWFULLNAME -bool true
 
 # Enable admin info at the Login Window
 "$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.loginwindow" AdminHostInfo HostName
 
 # Disable External Accounts at the Login Window
-"$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.loginwindow EnableExternalAccounts" 0
+"$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.loginwindow EnableExternalAccounts" -bool false
 
 # Stop automatic updates
 "$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.commerce" AutoUpdate -bool false
@@ -128,7 +128,7 @@ SUSER="sign"
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -create /Local/Target/Users/$SUSER PrimaryGroupID 20
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -create /Local/Target/Users/$SUSER NFSHomeDirectory "$TVOL"/Users/$SUSER
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -passwd /Local/Target/Users/$SUSER "$SUSER"
-# "$TVOL"/usr/sbin/createhomedir -l -i $SUSER
+# "$TVOL"/usr/sbin/createhomedir -c -u $SUSER
 
 # Create a local kiosk user account 
 KUSER="kiosk"
@@ -139,7 +139,7 @@ KUSER="kiosk"
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -create /Local/Target/Users/$KUSER PrimaryGroupID 20
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -create /Local/Target/Users/$KUSER NFSHomeDirectory "$TVOL"/Users/$KUSER
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -passwd /Local/Target/Users/$KUSER "$KUSER"
-# "$TVOL"/usr/sbin/createhomedir -l -i $KUSER
+# "$TVOL"/usr/sbin/createhomedir -c -u $KUSER
 
 # Enable Auto-Login in security settings
 "$DEFAULTS" write "$TVOL/Library/Preferences/.GlobalPreferences" com.apple.userspref.DisableAutoLogin 0
@@ -162,7 +162,7 @@ AUSER="localadmin"
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -append /Local/Target/Groups/admin GroupMembership $AUSER
 GENUID=$("$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -read /Local/Target/Users/$AUSER GeneratedUID)
 "$DIRADM" -f "$TVOL/var/db/dslocal/nodes/Default" localonly -append /Local/Target/Groups/admin GroupMembers $GENUID 
-# "$TVOL"/usr/sbin/createhomedir -l -i $AUSER
+# "$TVOL"/usr/sbin/createhomedir -c -u $AUSER
 
 # keep the setup assistant from appearing at reboot
 "$TVOL"/usr/bin/touch "$TVOL"/var/db/.AppleSetupDone
