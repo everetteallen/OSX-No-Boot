@@ -53,16 +53,11 @@ SUBMIT_TO_APP_DEVELOPERS=NO
 
 
 # Set the time zone automatically by location
-#"$DEFAULTS" write "$TVOL"/Library/Preferences/com.apple.timezone.auto Active -bool true
+"$DEFAULTS" write "$TVOL"/Library/Preferences/com.apple.timezone.auto Active -bool true
 
-# Set the time zone manually
-"$TVOL"/bin/ln -sf "$TVOL/usr/share/zoneinfo/America/New_York" "$TVOL/etc/localtime"
-/bin/chmod a+rx "$TVOL/etc/localtime"
+# Need to figure out how to set the timeserver and timezone without systemsetup
 
-# Configure a specific NTP server
-echo "server time.ncsu.edu" >> /etc/ntp.conf
-
-# Configure energy saver settings
+# Configure energy saver settings.  Need to figure out how to do this too.
 # "$DEFAULTS" write "$TVOL/Library/Preferences/SystemConfiguration/com.apple.PowerManagement"
 
 # Configure energy saver schedule
@@ -115,7 +110,7 @@ done
 "$PLBUDDY" -c "Add :ThirdPartyDataSubmitVersion integer 4" "$CRASHREPORTER_DIAG_PLIST"
 
 # Disable Time Machine Popups offering for new disks
-"$DEFAULTS" write "$TVOL"/Library/Preferences/com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+"$DEFAULTS" write "$TVOL/Library/Preferences/com.apple.TimeMachine" DoNotOfferNewDisksForBackup -bool true
 
 # Turn off restore windows
 "$DEFAULTS" write "$TVOL/$USER_TEMPLATE/Library/Preferences/.GlobalPreferences" NSQuitAlwaysKeepsWindows -bool false
