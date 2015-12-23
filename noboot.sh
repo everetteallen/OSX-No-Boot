@@ -57,6 +57,7 @@ SUBMIT_TO_APP_DEVELOPERS=NO
 
 # Set the time zone manually
 "$TVOL"/bin/ln -sf "$TVOL/usr/share/zoneinfo/America/New_York" "$TVOL/etc/localtime"
+/bin/chmod a+rx "$TVOL/etc/localtime"
 
 # Configure a specific NTP server
 echo "server time.ncsu.edu" >> /etc/ntp.conf
