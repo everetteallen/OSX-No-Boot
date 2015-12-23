@@ -53,7 +53,10 @@ SUBMIT_TO_APP_DEVELOPERS=NO
 
 
 # Set the time zone automatically by location
-"$DEFAULTS" write "$TVOL"/Library/Preferences/com.apple.timezone.auto Active -bool true
+#"$DEFAULTS" write "$TVOL"/Library/Preferences/com.apple.timezone.auto Active -bool true
+
+# Set the time zone manually
+"$TVOL"/bin/ln -sf "$TVOL/usr/share/zoneinfo/America/New_York" "$TVOL/etc/localtime"
 
 # Configure a specific NTP server
 echo "server time.ncsu.edu" >> /etc/ntp.conf
@@ -118,6 +121,9 @@ done
 
 # Stop writing .DS_Store files on the network
 "$DEFAULTS" write "$TVOL/$USER_TEMPLATE/Library/Preferences/.GlobalPreferences" DSDontWriteNetworkStores -bool true
+
+# Hide the dock
+"$DEFAULTS" write "$TVOL/$USER_TEMPLATE/Library/Preferences/com.apple.dock" autohide -bool true
 
 # Create a local sign user account
 SUSER="sign"
